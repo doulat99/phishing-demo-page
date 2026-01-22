@@ -4,12 +4,9 @@ import FakeUrlBar from "@/components/FakeUrlBar";
 import FakeSocialLogo from "@/components/FakeSocialLogo";
 import FakeLoginForm from "@/components/FakeLoginForm";
 import EducationalSidebar from "@/components/EducationalSidebar";
-
 const Index = () => {
   const [showIndicators, setShowIndicators] = useState(false);
-
-  return (
-    <div className="min-h-screen bg-background flex flex-col">
+  return <div className="min-h-screen bg-background flex flex-col">
       {/* Simulation Banner - Always visible */}
       <SimulationBanner />
 
@@ -67,10 +64,7 @@ const Index = () => {
 
           {/* Educational Sidebar */}
           <div className="lg:sticky lg:top-8">
-            <EducationalSidebar
-              showIndicators={showIndicators}
-              onToggle={setShowIndicators}
-            />
+            <EducationalSidebar showIndicators={showIndicators} onToggle={setShowIndicators} />
           </div>
         </div>
       </div>
@@ -78,14 +72,9 @@ const Index = () => {
       {/* Bottom Banner */}
       <div className="bg-muted border-t border-border py-4 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm text-muted-foreground">
-            🛡️ <span className="font-medium">Remember:</span> Always verify URLs, never share sensitive information via email links, 
-            and when in doubt, navigate directly to the official website.
-          </p>
+          
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
