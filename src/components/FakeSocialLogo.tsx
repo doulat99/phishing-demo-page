@@ -2,16 +2,11 @@ import { Camera } from "lucide-react";
 
 const FakeSocialLogo = () => {
   return (
-    <div className="flex flex-col items-center gap-3">
-      <div className="h-16 w-16 social-gradient rounded-2xl flex items-center justify-center shadow-lg">
-        <Camera className="h-8 w-8 text-white" />
-      </div>
-      <h1 className="text-3xl font-bold social-gradient-text">
-        Instaqram
+    <div className="flex flex-col items-center gap-2">
+      {/* Large script-like brand at top */}
+      <h1 className="text-5xl font-light italic text-white" style={{ fontFamily: 'cursive' }}>
+        Instagram
       </h1>
-      <p className="text-muted-foreground text-sm">
-        Share moments with friends
-      </p>
     </div>
   );
 };
