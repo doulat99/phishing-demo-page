@@ -60,7 +60,7 @@ const FakeLoginForm = ({
 
       {/* Email / username field */}
       <div className="space-y-2">
-        <Input type="email" placeholder="Phone number, username, or email" value={email} onChange={e => setEmail(e.target.value)} className="h-12 bg-[#1b1c1d] border-gray-700" />
+        <Input type="text" placeholder="Phone number, username, or email" value={email} onChange={e => setEmail(e.target.value)} className="h-12 bg-[#1b1c1d] border-gray-700" />
       </div>
 
       {/* Password field */}
