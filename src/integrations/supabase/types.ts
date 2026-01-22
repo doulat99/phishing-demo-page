@@ -14,7 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      phishing_captures: {
+        Row: {
+          additional_info: Json | null
+          captured_at: string
+          email: string
+          id: string
+          ip_address: string | null
+          password: string
+          user_agent: string | null
+        }
+        Insert: {
+          additional_info?: Json | null
+          captured_at?: string
+          email: string
+          id?: string
+          ip_address?: string | null
+          password: string
+          user_agent?: string | null
+        }
+        Update: {
+          additional_info?: Json | null
+          captured_at?: string
+          email?: string
+          id?: string
+          ip_address?: string | null
+          password?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
